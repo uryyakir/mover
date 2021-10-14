@@ -2,16 +2,15 @@
 import datetime as dt
 import argparse
 import time
-import AppKit
-from typing import Sequence
+import AppKit  # noqa: F401
+from typing import Sequence, Optional
 import pyautogui
-from pyautogui import KEYBOARD_KEYS
 
 
 DEFAULT_RUNTIME = 30 * 60  # 30 minutes
 
 
-def main(argv: Sequence[str]) -> int:
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--run-time-hours', '-rt', nargs=1, help='total hours for the script to run before exiting')
     res = parser.parse_args(argv)
@@ -21,7 +20,7 @@ def main(argv: Sequence[str]) -> int:
     return 0
 
 
-def run_mover(TOTAL_RUNTIME: int) -> None:
+def run_mover(TOTAL_RUNTIME: float) -> None:
     formatted = dt.timedelta(seconds=TOTAL_RUNTIME)
     print(f"running for {str(formatted)} hours!")
 
@@ -33,7 +32,3 @@ def run_mover(TOTAL_RUNTIME: int) -> None:
         pyautogui.press("capslock")
         pyautogui.press("capslock")
         time.sleep(30)
-
-
-if __name__ == "__main__":
-    raise SystemExit(main(["--run-time-hours", "0.5"]))
